@@ -7,5 +7,5 @@ Usage
 --------------------
 
 ```php
-    $result = $continer->get("goetas.fop")->convertToPdf("source.fo", "output.pdf");
+$result = $continer->get("goetas.fop")->convertToPdf("source.fo", "output.pdf");
 ```
