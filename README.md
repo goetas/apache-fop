@@ -6,6 +6,6 @@ Symfony2 Apache FOP Bundle
 Usage
 --------------------
 
-    ```ruby
+```php
     $result = $continer->get("goetas.fop")->convertToPdf("source.fo", "output.pdf");
-    ```
+```
