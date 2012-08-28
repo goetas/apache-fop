@@ -45,7 +45,9 @@ class Fop
 			$process->add ( $this->configurationFile );
 		}
 		
-		$esito = $process->getProcess ()->run ();
+		$esito = $process->getProcess ()->run (function ($a, $b) {
+			//echo $b."<br/>";
+		});
 
 		return !($esito>0);
 	
