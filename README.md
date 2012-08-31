@@ -29,5 +29,10 @@ Usage
 --------------------
 
 ```php
+
+// convert FO to PDF
 $result = $container->get("goetas.fop")->convertToPdf("source.fo", "output.pdf");
+
+//convert to PDF using XML and XSLT
+$result = $container->get("goetas.fop")->convertToPdf("source.xml", "output.pdf", "transform.xsl");
 ```

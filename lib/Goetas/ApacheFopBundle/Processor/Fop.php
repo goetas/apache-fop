@@ -19,13 +19,13 @@ class Fop
 	public function __construct($fopExecutable) {
 		$this->setFopExecutable($fopExecutable);
 	}
-	public function convertToPdf($source, $destination) {
-		return $this->connvert($source, $destination, self::OTUPUT_PDF);
+	public function convertToPdf($source, $destination, $xsl = null) {
+		return $this->connvert($source, $destination, self::OTUPUT_PDF, $xsl);
 	}
-	public function convertToRtf($source, $destination) {
-		return $this->connvert($source, $destination, self::OTUPUT_RTF);
+	public function convertToRtf($source, $destination, $xsl = null) {
+		return $this->connvert($source, $destination, self::OTUPUT_RTF, $xsl);
 	}
-	public function connvert($source, $destination, $outputFormat) {
+	public function connvert($source, $destination, $outputFormat, $xsl = null) {
 		
 		$process = new ProcessBuilder ();
 		$process->add ( $this->fopExecutable );
@@ -33,8 +33,16 @@ class Fop
 		$process->add ( "-q" );
 		$process->add ( "-r" );
 		
-		$process->add ( "-fo" );
-		$process->add ( $source );
+		if($xsl!==null){
+			$process->add ( "-xml" );
+			$process->add ( $source );
+			
+			$process->add ( "-xsl" );
+			$process->add ( $xsl );
+		}else{
+			$process->add ( "-fo" );
+			$process->add ( $source );
+		}
 		
 		$process->add ( "-out" );
 		$process->add ( $outputFormat );
