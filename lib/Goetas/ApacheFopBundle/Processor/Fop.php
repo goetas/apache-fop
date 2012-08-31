@@ -79,10 +79,9 @@ class Fop
 	}
 	
 	public function setConfigurationFile($configurationFile) {
-		if(!is_readable($this->configurationFile)){
-			throw new \RuntimeException(sprintf("Can't find configuration file named '%s'", $this->fopExecutable));
+		if(!is_readable($configurationFile)){
+			throw new \RuntimeException(sprintf("Can't find configuration file named '%s'", $configurationFile));
 		}
-			
 		$this->configurationFile = $configurationFile;
 	}
 	public function getJavaExecutable() {
