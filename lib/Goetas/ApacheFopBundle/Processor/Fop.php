@@ -20,12 +20,12 @@ class Fop
 		$this->setFopExecutable($fopExecutable);
 	}
 	public function convertToPdf($source, $destination, $xsl = null) {
-		return $this->connvert($source, $destination, self::OTUPUT_PDF, $xsl);
+		return $this->convert($source, $destination, self::OTUPUT_PDF, $xsl);
 	}
 	public function convertToRtf($source, $destination, $xsl = null) {
-		return $this->connvert($source, $destination, self::OTUPUT_RTF, $xsl);
+		return $this->convert($source, $destination, self::OTUPUT_RTF, $xsl);
 	}
-	public function connvert($source, $destination, $outputFormat, $xsl = null) {
+	public function convert($source, $destination, $outputFormat, $xsl = null) {
 		
 		$process = new ProcessBuilder ();
 		$process->add ( $this->fopExecutable );
@@ -52,13 +52,16 @@ class Fop
 			$process->add ( "-c" );
 			$process->add ( $this->configurationFile );
 		}
+		$msg = array();
 		
-		$esito = $process->getProcess ()->run (function ($a, $b) {
-			//echo $b."<br/>";
+		$esito = $process->getProcess ()->run (function ($a, $b) use (&$msg){
+			$msg[]=$b; 
 		});
-
-		return !($esito>0);
-	
+		if($esito>0){
+			$e = new \Exception("Apache FOP exception.\n".implode("\n", $msg));
+			throw new \RuntimeException("Can't generage the document", null, $e);
+		}
+		return true;
 	}
 	public function getFopExecutable() {
 		return $this->fopExecutable;
