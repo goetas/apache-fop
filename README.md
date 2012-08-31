@@ -14,6 +14,18 @@ goetas_apache_fop:
 ```
 
 
+Add this to AppKernel.php
+```
+new Goetas\ApacheFopBundle\GoetasApacheFopBundle();
+```
+
+Add this to your autoloader (if not using composer)
+```
+'Goetas\ApacheFopBundle' => $vendorDir . '/goetas/apache-fop/Goetas/GoetasApacheFop/lib/'
+
+```
+
+
 Usage
 --------------------
 
