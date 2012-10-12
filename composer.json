@@ -1,7 +1,7 @@
 {
     "name": "goetas/apache-fop",
     "type": "symfony-bundle",
-    "description": "Symfony2 Symfony2 Apache FOP Bundle",
+    "description": "Symfony2 Apache FOP Bundle",
     "keywords": ["pdf", "rtf", "documents"],
     "homepage": "https://github.com/goetas/apache-fop",
     "license": "MIT",
@@ -16,7 +16,7 @@
         "symfony/symfony": "2.*"
     },
     "autoload": {
-        "psr-0": { "Goetas\\GoetasApacheFop": "lib/" }
+        "psr-0": { "Goetas\\ApacheFopBundle": "lib/" }
     },
     "target-dir": "Goetas/GoetasApacheFop",
     "minimum-stability": "dev"
