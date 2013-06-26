@@ -6,7 +6,7 @@ Symfony2 [Apache FOP](http://xmlgraphics.apache.org/fop/) (XSL-FO)  Bundle
 Configuration
 --------------------
 
-Add following lines on your **config.xml**
+Add following lines on your **config.yml**
 ```
 goetas_apache_fop:
     executable: /install_path_to_apache_fop/fop
