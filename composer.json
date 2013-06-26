@@ -17,6 +17,5 @@
     },
     "autoload": {
         "psr-0": { "Goetas\\ApacheFopBundle": "lib/" }
-    },
-    "minimum-stability": "dev"
+    }
 }
