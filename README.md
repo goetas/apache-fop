@@ -1,4 +1,4 @@
-apache-fop
+apache-fop-bundle
 ==========
 
 Symfony2 [Apache FOP](http://xmlgraphics.apache.org/fop/) (XSL-FO)  Bundle
