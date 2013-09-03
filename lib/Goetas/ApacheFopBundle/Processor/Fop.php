@@ -77,7 +77,7 @@ class Fop {
         return true;
     }
     public function callback(InputInterface $source, $callback, $outputFormat, $xsl = null, array $params = array()) {
-        $process = $this->runProcess($source, new StdoutOutput(), $outputFormat, $xsl?new FileInput($xsl):null, $params);
+        $process = $this->runProcess($source, "-", $outputFormat, $xsl?new FileInput($xsl):null, $params);
         $process->run(function($type, $buffer){
             if (Process::OUT === $type) {
                 $callback($buffer);
