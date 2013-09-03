@@ -29,10 +29,25 @@ Usage
 --------------------
 
 ```php
+$service = $container->get("goetas.fop");
+// convert FO to PDF or RTF
+$service->convert("source.fo", "output.pdf", "appplication/pdf");
+$service->convert(new FileInput("source.fo"), "output.pdf", "text/rtf");
 
-// convert FO to PDF
-$result = $container->get("goetas.fop")->convertToPdf("source.fo", "output.pdf");
+//convert to PDF using XML and XSLT and with params
+$service->convert("source.xml", "output.pdf", "appplication/pdf", "transform.xsl", array("paramName"=>"paramValue"));
 
-//convert to PDF using XML and XSLT
-$result = $container->get("goetas.fop")->convertToPdf("source.xml", "output.pdf", "transform.xsl");
+//convert reading a FOP input from a string
+$service->convert(new StringInput("source.fo"), "output.pdf", "appplication/pdf");
+
+//convert reading a FOP input from a string, and get the result
+$service->get(new StringInput("... fo data ..."), "appplication/pdf");
+
+//convert reading a FOP input from a string, and output the result
+$service->out(new StringInput("... fo data ..."), "appplication/pdf");
+
+//convert reading a FO data from a file, and output the result (plus xsl)
+$service->out(new FileInput("... fo data ..."), "text/rtf", "transform.xsl", array("paramName"=>"paramValue"));
+
+
 ```
