@@ -3,6 +3,22 @@ apache-fop-bundle
 
 Symfony2 [Apache FOP](http://xmlgraphics.apache.org/fop/) (XSL-FO)  Bundle
 
+[![Downloads](https://poser.pugx.org/goetas/apache-fop/d/total.png)](https://packagist.org/packages/goetas/apache-fop)
+[![Latest Stable Version](https://poser.pugx.org/goetas/apache-fop/version.png)](https://packagist.org/packages/goetas/apache-fop)
+[![Latest Unstable Version](https://poser.pugx.org/goetas/apache-fop/v/unstable.png)](https://packagist.org/packages/goetas/apache-fop)
+
+
+Installing (composer)
+--------------------
+
+Add following lines on your **composer.json**
+```
+"requre":{
+    "goetas/apache-fop": "1.0.*",
+}
+```
+
+
 Configuration
 --------------------
 
@@ -19,7 +35,7 @@ Add this to **AppKernel.php**
 new Goetas\ApacheFopBundle\GoetasApacheFopBundle();
 ```
 
-Add this to your **autoloader** (if not using composer)
+Add this to your **autoloader** (only if not using composer)
 ```
 'Goetas\ApacheFopBundle' => $vendorDir . '/goetas/apache-fop/Goetas/GoetasApacheFop/lib/'
 ```
