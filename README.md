@@ -52,9 +52,12 @@ $service->convert(new FileInput("source.fo"), "output.pdf", "text/rtf");
 
 //convert to PDF using XML and XSLT and with params
 $service->convert("source.xml", "output.pdf", "appplication/pdf", "transform.xsl", array("paramName"=>"paramValue"));
+//convert to PDF using XML and XSLT (reading xsl from string)
+$service->convert("source.xml", "output.pdf", "appplication/pdf", new StringInput(" ... xsl string ..."));
 
 //convert reading a FOP input from a string
 $service->convert(new StringInput("source.fo"), "output.pdf", "appplication/pdf");
+
 
 //convert reading a FOP input from a string, and get the result
 $service->get(new StringInput("... fo data ..."), "appplication/pdf");
