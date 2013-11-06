@@ -5,7 +5,6 @@ namespace Goetas\ApacheFopBundle\Processor;
 use Symfony\Component\Process\Process;
 
 use Goetas\ApacheFopBundle\Input\FileInput;
-
 use Goetas\ApacheFopBundle\Input\InputInterface;
 
 /**
@@ -26,14 +25,37 @@ class Fop
     {
         $this->setFopExecutable ( $fopExecutable );
     }
+    /**
+     * Convert to PDF reading a FOP input and save the result into file
+     * @param  InputInterface|string $source
+     * @param  string                $xsl
+     * @throws \RuntimeException
+     * @deprecated
+     */
     public function convertToPdf($source, $destination, $xsl = null)
     {
         return $this->convert ( $source, $destination, self::OTUPUT_PDF, $xsl );
     }
+    /**
+     * Convert to RTF reading a FOP input and save the result into file
+     * @param  InputInterface|string $source
+     * @param  string                $xsl
+     * @throws \RuntimeException
+     * @deprecated
+     */
     public function convertToRtf($source, $destination, $xsl = null)
     {
         return $this->convert ( $source, $destination, self::OTUPUT_RTF, $xsl );
     }
+    /**
+     * Convert reading a FOP input, saving the result into file
+     * @param  InputInterface|string $source
+     * @param  string                $destination
+     * @param  string|const          $outputFormat self::OTUPUT_PDF or self::OTUPUT_RTF or other supported mimes by Apache FOP
+     * @param  InputInterface|string $xsl
+     * @param  array                 $params
+     * @throws \RuntimeException
+     */
     public function convert($source, $destination, $outputFormat, $xsl = null, array $params = array())
     {
         if (is_string($source)) {
@@ -52,10 +74,20 @@ class Fop
 
         return true;
     }
-
-    public function get(InputInterface $source, $outputFormat, InputInterface $xsl = null, array $params = array())
+    /**
+     * Convert reading a FOP input, and get the result
+     * @param  InputInterface        $source
+     * @param  string                $outputFormat self::OTUPUT_PDF or self::OTUPUT_RTF or other supported mimes by Apache FOP
+     * @param  InputInterface|string $xsl
+     * @param  array                 $params
+     * @throws \RuntimeException
+     */
+    public function get(InputInterface $source, $outputFormat, $xsl = null, array $params = array())
     {
-        $process = $this->runProcess(new FileInput($source), "-", $outputFormat, $xsl?new FileInput($xsl):null, $params);
+        if (is_string($xsl)) {
+            $xsl = new FileInput($xsl);
+        }
+        $process = $this->runProcess(new FileInput($source), "-", $outputFormat, $xsl, $params);
         $process->run();
         if (!$process->isSuccessful()) {
             $e = new \Exception ( "Apache FOP exception.\n" . $process->getErrorOutput() );
@@ -64,9 +96,20 @@ class Fop
 
         return $process->getOutput();
     }
+    /**
+     * Convert reading a FOP input, and flush to output the result
+     * @param  InputInterface        $source
+     * @param  string                $outputFormat self::OTUPUT_PDF or self::OTUPUT_RTF or other supported mimes by Apache FOP
+     * @param  InputInterface|string $xsl
+     * @param  array                 $params
+     * @throws \RuntimeException
+     */
     public function out(InputInterface $source, $outputFormat, $xsl = null, array $params = array())
     {
-        $process = $this->runProcess($source, "-", $outputFormat, $xsl?new FileInput($xsl):null, $params);
+        if (is_string($xsl)) {
+            $xsl = new FileInput($xsl);
+        }
+        $process = $this->runProcess($source, "-", $outputFormat, $xsl, $params);
         $process->run(function ($type, $buffer) {
             if (Process::OUT === $type) {
                 echo $buffer;
@@ -79,9 +122,21 @@ class Fop
 
         return true;
     }
+    /**
+     * Convert reading a FOP input, and flush to output the result
+     * @param  InputInterface    $source
+     * @param  callback          $callback     will recieve the output
+     * @param  string            $outputFormat self::OTUPUT_PDF or self::OTUPUT_RTF or other supported mimes by Apache FOP
+     * @param  string            $xsl
+     * @param  array             $params
+     * @throws \RuntimeException
+     */
     public function callback(InputInterface $source, $callback, $outputFormat, $xsl = null, array $params = array())
     {
-        $process = $this->runProcess($source, "-", $outputFormat, $xsl?new FileInput($xsl):null, $params);
+        if (is_string($xsl)) {
+            $xsl = new FileInput($xsl);
+        }
+        $process = $this->runProcess($source, "-", $outputFormat, $xsl, $params);
         $process->run(function ($type, $buffer) {
             if (Process::OUT === $type) {
                 $callback($buffer);
@@ -96,15 +151,15 @@ class Fop
     }
 
     /**
-     * Build a ProcessBuilder user to run FO conversion
-     * @param  string                                    $source
-     * @param  string                                    $destination
+     *
+     * @param  InputInterface                            $input
+     * @param  string                                    $destination  The place where save the result
      * @param  string                                    $outputFormat
-     * @param  string                                    $xsl
+     * @param  InputInterface                            $xsl
      * @param  array                                     $params
      * @return \Symfony\Component\Process\ProcessBuilder
      */
-    protected function runProcess(InputInterface $input, $output,  $outputFormat, InputInterface $xsl = null, array $params = array())
+    protected function runProcess(InputInterface $input, $destination,  $outputFormat, InputInterface $xsl = null, array $params = array())
     {
         $builder = new ProcessBuilder ();
         $builder->add ( $this->fopExecutable );
@@ -131,7 +186,7 @@ class Fop
 
         $builder->add ( "-out" );
         $builder->add ( $outputFormat );
-        $builder->add ( $output );
+        $builder->add ( $destination );
 
         if ($this->configurationFile !== null) {
             $builder->add ( "-c" );
@@ -148,35 +203,66 @@ class Fop
 
         return $proc;
     }
-
+    /**
+     * Get the path for FOP executable
+     * @return string
+     */
     public function getFopExecutable()
     {
         return $this->fopExecutable;
     }
+    /**
+     * Get the path of FOP config file
+     * @return string
+     */
     public function getConfigurationFile()
     {
         return $this->configurationFile;
     }
+    /**
+     * SET the path for FOP executable
+     * @return self
+     */
     public function setFopExecutable($fopExecutable)
     {
         if (! is_executable ( $fopExecutable )) {
             throw new \RuntimeException ( sprintf ( "Can't find %s command", $fopExecutable ) );
         }
         $this->fopExecutable = $fopExecutable;
+
+        return $this;
     }
+    /**
+     * Set the path of FOP config file
+     * @param  string $configurationFile
+     * @return self
+     */
     public function setConfigurationFile($configurationFile)
     {
         if (! is_readable ( $configurationFile )) {
             throw new \RuntimeException ( sprintf ( "Can't find configuration file named '%s'", $configurationFile ) );
         }
         $this->configurationFile = $configurationFile;
+
+        return $this;
     }
+    /**
+     * Get the path for Java executable
+     * @return string
+     */
     public function getJavaExecutable()
     {
         return $this->javaExecutable;
     }
+    /**
+     * SET the path for Java executable
+     * @param  string $javaExecutable
+     * @return self
+     */
     public function setJavaExecutable($javaExecutable)
     {
         $this->javaExecutable = $javaExecutable;
+
+        return $this;
     }
 }
