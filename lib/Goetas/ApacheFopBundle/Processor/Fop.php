@@ -4,13 +4,7 @@ namespace Goetas\ApacheFopBundle\Processor;
 
 use Symfony\Component\Process\Process;
 
-use Goetas\ApacheFopBundle\Output\StdoutOutput;
-
-use Goetas\ApacheFopBundle\Output\FileOutput;
-
 use Goetas\ApacheFopBundle\Input\FileInput;
-
-use Goetas\ApacheFopBundle\Output\OutputInterface;
 
 use Goetas\ApacheFopBundle\Input\InputInterface;
 
@@ -20,29 +14,33 @@ use Goetas\ApacheFopBundle\Input\InputInterface;
  */
 use Symfony\Component\Process\ProcessBuilder;
 
-class Fop {
+class Fop
+{
     const OTUPUT_PDF = 'application/pdf';
     const OTUPUT_RTF = 'text/rtf';
 
     protected $fopExecutable;
     protected $javaExecutable;
     protected $configurationFile;
-    public function __construct($fopExecutable) {
+    public function __construct($fopExecutable)
+    {
         $this->setFopExecutable ( $fopExecutable );
     }
-    public function convertToPdf($source, $destination, $xsl = null) {
+    public function convertToPdf($source, $destination, $xsl = null)
+    {
         return $this->convert ( $source, $destination, self::OTUPUT_PDF, $xsl );
     }
-    public function convertToRtf($source, $destination, $xsl = null) {
+    public function convertToRtf($source, $destination, $xsl = null)
+    {
         return $this->convert ( $source, $destination, self::OTUPUT_RTF, $xsl );
     }
-    public function convert($source, $destination, $outputFormat, $xsl = null, array $params = array()) {
-
-        if(is_string($source)){
-        	$source = new FileInput($source);
+    public function convert($source, $destination, $outputFormat, $xsl = null, array $params = array())
+    {
+        if (is_string($source)) {
+            $source = new FileInput($source);
         }
-        if(is_string($xsl)){
-        	$xsl = new FileInput($xsl);
+        if (is_string($xsl)) {
+            $xsl = new FileInput($xsl);
         }
 
         $process = $this->runProcess($source, $destination, $outputFormat, $xsl, $params);
@@ -51,21 +49,25 @@ class Fop {
             $e = new \Exception ( "Apache FOP exception.\n" . $process->getErrorOutput() );
             throw new \RuntimeException ( "Can't generate the document", null, $e );
         }
+
         return true;
     }
 
-    public function get(InputInterface $source, $outputFormat, InputInterface $xsl = null, array $params = array()) {
+    public function get(InputInterface $source, $outputFormat, InputInterface $xsl = null, array $params = array())
+    {
         $process = $this->runProcess(new FileInput($source), "-", $outputFormat, $xsl?new FileInput($xsl):null, $params);
         $process->run();
         if (!$process->isSuccessful()) {
             $e = new \Exception ( "Apache FOP exception.\n" . $process->getErrorOutput() );
             throw new \RuntimeException ( "Can't generate the document", null, $e );
         }
+
         return $process->getOutput();
     }
-    public function out(InputInterface $source, $outputFormat, $xsl = null, array $params = array()) {
+    public function out(InputInterface $source, $outputFormat, $xsl = null, array $params = array())
+    {
         $process = $this->runProcess($source, "-", $outputFormat, $xsl?new FileInput($xsl):null, $params);
-        $process->run(function($type, $buffer){
+        $process->run(function ($type, $buffer) {
             if (Process::OUT === $type) {
                 echo $buffer;
             }
@@ -74,11 +76,13 @@ class Fop {
             $e = new \Exception ( "Apache FOP exception.\n" . $process->getErrorOutput() );
             throw new \RuntimeException ( "Can't generate the document", null, $e );
         }
+
         return true;
     }
-    public function callback(InputInterface $source, $callback, $outputFormat, $xsl = null, array $params = array()) {
+    public function callback(InputInterface $source, $callback, $outputFormat, $xsl = null, array $params = array())
+    {
         $process = $this->runProcess($source, "-", $outputFormat, $xsl?new FileInput($xsl):null, $params);
-        $process->run(function($type, $buffer){
+        $process->run(function ($type, $buffer) {
             if (Process::OUT === $type) {
                 $callback($buffer);
             }
@@ -87,20 +91,21 @@ class Fop {
             $e = new \Exception ( "Apache FOP exception.\n" . $process->getErrorOutput() );
             throw new \RuntimeException ( "Can't generate the document", null, $e );
         }
+
         return true;
     }
 
-
     /**
      * Build a ProcessBuilder user to run FO conversion
-     * @param string $source
-     * @param string $destination
-     * @param string $outputFormat
-     * @param string $xsl
-     * @param array $params
+     * @param  string                                    $source
+     * @param  string                                    $destination
+     * @param  string                                    $outputFormat
+     * @param  string                                    $xsl
+     * @param  array                                     $params
      * @return \Symfony\Component\Process\ProcessBuilder
      */
-    protected function runProcess(InputInterface $input, $output,  $outputFormat, InputInterface $xsl = null, array $params = array()) {
+    protected function runProcess(InputInterface $input, $output,  $outputFormat, InputInterface $xsl = null, array $params = array())
+    {
         $builder = new ProcessBuilder ();
         $builder->add ( $this->fopExecutable );
 
@@ -118,7 +123,7 @@ class Fop {
             $input->buildParams($builder);
         }
 
-        foreach ( $params as $key => $value ) {
+        foreach ($params as $key => $value) {
             $builder->add ( "-param" );
             $builder->add ( $key );
             $builder->add ( $value );
@@ -140,32 +145,38 @@ class Fop {
         if ($xsl instanceof InputInterface) {
             $xsl->setInput($proc);
         }
+
         return $proc;
     }
 
-
-    public function getFopExecutable() {
+    public function getFopExecutable()
+    {
         return $this->fopExecutable;
     }
-    public function getConfigurationFile() {
+    public function getConfigurationFile()
+    {
         return $this->configurationFile;
     }
-    public function setFopExecutable($fopExecutable) {
+    public function setFopExecutable($fopExecutable)
+    {
         if (! is_executable ( $fopExecutable )) {
             throw new \RuntimeException ( sprintf ( "Can't find %s command", $fopExecutable ) );
         }
         $this->fopExecutable = $fopExecutable;
     }
-    public function setConfigurationFile($configurationFile) {
+    public function setConfigurationFile($configurationFile)
+    {
         if (! is_readable ( $configurationFile )) {
             throw new \RuntimeException ( sprintf ( "Can't find configuration file named '%s'", $configurationFile ) );
         }
         $this->configurationFile = $configurationFile;
     }
-    public function getJavaExecutable() {
+    public function getJavaExecutable()
+    {
         return $this->javaExecutable;
     }
-    public function setJavaExecutable($javaExecutable) {
+    public function setJavaExecutable($javaExecutable)
+    {
         $this->javaExecutable = $javaExecutable;
     }
 }

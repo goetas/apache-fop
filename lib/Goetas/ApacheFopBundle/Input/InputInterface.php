@@ -4,7 +4,8 @@ use Symfony\Component\Process\Process;
 
 use Symfony\Component\Process\ProcessBuilder;
 
-interface InputInterface{
-	function buildParams(ProcessBuilder $proc);
-	function setInput(Process $proc);
+interface InputInterface
+{
+    public function buildParams(ProcessBuilder $proc);
+    public function setInput(Process $proc);
 }
