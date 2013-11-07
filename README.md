@@ -6,6 +6,7 @@ Symfony2 [Apache FOP](http://xmlgraphics.apache.org/fop/) (XSL-FO)  Bundle
 [![Downloads](https://poser.pugx.org/goetas/apache-fop/d/total.png)](https://packagist.org/packages/goetas/apache-fop)
 [![Latest Stable Version](https://poser.pugx.org/goetas/apache-fop/version.png)](https://packagist.org/packages/goetas/apache-fop)
 [![Latest Unstable Version](https://poser.pugx.org/goetas/apache-fop/v/unstable.png)](https://packagist.org/packages/goetas/apache-fop)
+[![Build Status](https://travis-ci.org/goetas/apache-fop.png?branch=master)](https://travis-ci.org/goetas/apache-fop)
 
 
 Installing (composer)
