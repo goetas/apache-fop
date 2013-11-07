@@ -87,7 +87,7 @@ class Fop
         if (is_string($xsl)) {
             $xsl = new FileInput($xsl);
         }
-        $process = $this->runProcess(new FileInput($source), "-", $outputFormat, $xsl, $params);
+        $process = $this->runProcess($source, "-", $outputFormat, $xsl, $params);
         $process->run();
         if (!$process->isSuccessful()) {
             $e = new \Exception ( "Apache FOP exception.\n" . $process->getErrorOutput() );
