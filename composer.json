@@ -1,26 +1,37 @@
 {
-    "name": "goetas/apache-fop",
-    "type": "symfony-bundle",
-    "description": "Symfony2 Apache FOP Bundle",
-    "keywords": ["pdf", "rtf", "documents", "fop", "xsl", "apache", "xslt"],
-    "homepage": "https://github.com/goetas/apache-fop",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Asmir Mustafic",
-            "email": "goetas@lignano.it"
-        }
-    ],
-    "require": {
-        "php": ">=5.3.2",
-        "symfony/symfony": "2.*"
-    },
-    "autoload": {
-        "psr-0": { "Goetas\\ApacheFopBundle": "lib/" }
-    },
-    "extra":{
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
-    }
+	"name" : "goetas/apache-fop",
+	"description" : "Symfony2 Apache FOP Bundle",
+	"type" : "symfony-bundle",
+	"authors" : [{
+			"name" : "Asmir Mustafic",
+			"email" : "goetas@lignano.it"
+		}
+	],
+	"keywords" : [
+		"pdf",
+		"rtf",
+		"documents",
+		"fop",
+		"xsl",
+		"apache",
+		"xslt"
+	],
+	"homepage" : "https://github.com/goetas/apache-fop",
+	"license" : [
+		"MIT"
+	],
+	"require" : {
+		"php" : ">=5.3.2",
+		"symfony/process" : "2.*"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Goetas\\ApacheFopBundle" : "lib/"
+		}
+	},
+	"extra" : {
+		"branch-alias" : {
+			"dev-master" : "1.0-dev"
+		}
+	}
 }

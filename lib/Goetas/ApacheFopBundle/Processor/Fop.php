@@ -152,7 +152,8 @@ class Fop
 
     /**
      *
-     * @param  InputInterface                            $input
+     *
+     * @param  InputInterface                            $input Ony $input can use StringInput
      * @param  string                                    $destination  The place where save the result
      * @param  string                                    $outputFormat
      * @param  InputInterface                            $xsl
