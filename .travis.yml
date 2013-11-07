@@ -3,12 +3,6 @@ language: php
 php:
   - 5.3
   - 5.4
-  - 5.5
-
-env:
-  - DB=mysql
-  - DB=pgsql
-  - DB=sqlite
 
 before_script:
   - composer install --prefer-dist --dev
