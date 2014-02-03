@@ -71,3 +71,7 @@ $service->out(new FileInput("... fo data ..."), "text/rtf", "transform.xsl", arr
 
 
 ```
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/goetas/apache-fop/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
