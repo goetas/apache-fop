@@ -48,23 +48,23 @@ Usage
 ```php
 $service = $container->get("goetas.fop");
 // convert FO to PDF or RTF
-$service->convert("source.fo", "output.pdf", "appplication/pdf");
+$service->convert("source.fo", "output.pdf", "application/pdf");
 $service->convert(new FileInput("source.fo"), "output.pdf", "text/rtf");
 
 //convert to PDF using XML and XSLT and with params
-$service->convert("source.xml", "output.pdf", "appplication/pdf", "transform.xsl", array("paramName"=>"paramValue"));
+$service->convert("source.xml", "output.pdf", "application/pdf", "transform.xsl", array("paramName"=>"paramValue"));
 //convert to PDF using XML and XSLT (reading xsl from string)
-$service->convert("source.xml", "output.pdf", "appplication/pdf", new StringInput(" ... xsl string ..."));
+$service->convert("source.xml", "output.pdf", "application/pdf", new StringInput(" ... xsl string ..."));
 
 //convert reading a FOP input from a string
-$service->convert(new StringInput("source.fo"), "output.pdf", "appplication/pdf");
+$service->convert(new StringInput("source.fo"), "output.pdf", "application/pdf");
 
 
 //convert reading a FOP input from a string, and get the result
-$service->get(new StringInput("... fo data ..."), "appplication/pdf");
+$service->get(new StringInput("... fo data ..."), "application/pdf");
 
 //convert reading a FOP input from a string, and output the result
-$service->out(new StringInput("... fo data ..."), "appplication/pdf");
+$service->out(new StringInput("... fo data ..."), "application/pdf");
 
 //convert reading a FO data from a file, and output the result (plus xsl)
 $service->out(new FileInput("... fo data ..."), "text/rtf", "transform.xsl", array("paramName"=>"paramValue"));
