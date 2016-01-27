@@ -21,6 +21,7 @@ class Fop
     protected $fopExecutable;
     protected $javaExecutable;
     protected $configurationFile;
+    protected $env = array();
     public function __construct($fopExecutable)
     {
         $this->setFopExecutable ( $fopExecutable );
@@ -164,6 +165,10 @@ class Fop
     {
         $builder = new ProcessBuilder ();
         $builder->add ( $this->fopExecutable );
+        foreach ($this->env as $name => $v)
+        {
+            $builder->setEnv($name, $v);
+        }
 
         $builder->add ( "-q" );
         $builder->add ( "-r" );
@@ -265,5 +270,10 @@ class Fop
         $this->javaExecutable = $javaExecutable;
 
         return $this;
+    }
+
+    public function addEnv($name, $value)
+    {
+        $this->env[$name] = $value;
     }
 }
