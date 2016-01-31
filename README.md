@@ -27,6 +27,8 @@ Add following lines on your **config.yml**
 ```
 goetas_apache_fop:
     executable: /install_path_to_apache_fop/fop
+    java_home: /usr/local # optional, define JAVA_HOME for fop executable
+    java_options: -Xmx512M # optional, define _JAVA_OPTIONS for fop executable
     config: ../../path_to_optional_config_xml
 ```
 

@@ -32,6 +32,12 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('config')
             ->defaultNull()
             ->end()
+            ->scalarNode('java_home')
+            ->defaultNull()
+            ->end()
+            ->scalarNode('java_options')
+            ->defaultNull()
+            ->end()
             ->end();
     }
 }

@@ -34,7 +34,15 @@ class GoetasApacheFopExtension extends Extension
         }
 
         if ($config["java"]!==null) {
-            $definition->addMethodCall("setJavaExecutable", array($config["config"]));
+            $definition->addMethodCall("setJavaExecutable", array($config["java"]));
+        }
+
+        if ($config["java_home"]!==null) {
+            $definition->addMethodCall("addEnv", array("JAVA_HOME", $config["java_home"]));
+        }
+
+        if ($config["java_options"]!==null) {
+            $definition->addMethodCall("addEnv", array("_JAVA_OPTIONS", $config["java_options"]));
         }
 
         $definition->setPublic ( true );
