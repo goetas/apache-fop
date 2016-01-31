@@ -1,22 +1,7 @@
 {
-	"name" : "goetas/apache-fop",
+	"name" : "loicmonney/apache-fop",
 	"description" : "Symfony2 Apache FOP Bundle",
 	"type" : "symfony-bundle",
-	"authors" : [{
-			"name" : "Asmir Mustafic",
-			"email" : "goetas@lignano.it"
-		}
-	],
-	"keywords" : [
-		"pdf",
-		"rtf",
-		"documents",
-		"fop",
-		"xsl",
-		"apache",
-		"xslt"
-	],
-	"homepage" : "https://github.com/goetas/apache-fop",
 	"license" : [
 		"MIT"
 	],
