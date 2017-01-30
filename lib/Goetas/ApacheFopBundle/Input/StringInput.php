@@ -17,6 +17,6 @@ class StringInput implements InputInterface
     }
     public function setInput(Process $proc)
     {
-        $proc->setStdin($this->resource);
+        $proc->setInput($this->resource);
     }
 }

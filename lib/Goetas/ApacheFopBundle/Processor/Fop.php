@@ -74,12 +74,14 @@ class Fop
 
         return true;
     }
+
     /**
      * Convert reading a FOP input, and get the result
      * @param  InputInterface        $source
      * @param  string                $outputFormat self::OTUPUT_PDF or self::OTUPUT_RTF or other supported mimes by Apache FOP
      * @param  InputInterface|string $xsl
      * @param  array                 $params
+     * @return string
      * @throws \RuntimeException
      */
     public function get(InputInterface $source, $outputFormat, $xsl = null, array $params = array())
@@ -158,7 +160,7 @@ class Fop
      * @param  string                                    $outputFormat
      * @param  InputInterface                            $xsl
      * @param  array                                     $params
-     * @return \Symfony\Component\Process\ProcessBuilder
+     * @return \Symfony\Component\Process\Process
      */
     protected function runProcess(InputInterface $input, $destination,  $outputFormat, InputInterface $xsl = null, array $params = array())
     {
