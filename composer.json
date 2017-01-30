@@ -1,6 +1,6 @@
 {
-	"name" : "citadev/apache-fop",
-	"description" : "Symfony2/3 Apache FOP Bundle",
+	"name" : "goetas/apache-fop",
+	"description" : "Symfony 2 / 3 Apache FOP Bundle",
 	"type" : "symfony-bundle",
 	"authors" : [{
 			"name" : "Asmir Mustafic",
