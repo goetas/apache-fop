@@ -1,5 +1,5 @@
 {
-	"name" : "goetas/apache-fop",
+	"name" : "citadev/apache-fop",
 	"description" : "Symfony 2 / 3 Apache FOP Bundle",
 	"type" : "symfony-bundle",
 	"authors" : [{
